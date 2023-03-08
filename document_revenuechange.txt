@@ -1,0 +1,66 @@
+dateOfExtraction='2020-06-30'
+
+
+
+created_date=datetime.datetime.date(datetime.datetime.now())
+created_date=datetime.datetime.strptime(str(created_date),'%Y-%m-%d')
+
+
+
+dateOfExtraction=datetime.datetime.strptime(dateOfExtraction,'%Y-%m-%d')
+
+
+
+df=pd.read_csv(r'C:\Users\PrabhakarGujari\employee_data.csv')
+
+
+
+delta = datetime.timedelta(days=1)
+next_day = dateOfExtraction + delta
+
+
+
+   
+try:
+    if (dateOfExtraction.month != next_day.month) and (df is not empty):
+        print("continue with code")
+
+
+
+except:
+    print("")
+
+
+
+
+################
+
+
+index=conditional.index.tolist()
+condition1=conditional[['Master1','Master2','Master3']]
+condition2=conditional[['Criteria1','Criteria2','Exclusion']]
+df_check=condition1.values.tolist()
+values=condition2.values.tolist()
+
+
+
+for indexa, a,b in zip(index, values,df_check):
+    list_of_tuples = list(zip(b, a))
+    df = pd.DataFrame(list_of_tuples, columns = ['A','B'])
+    df.transpose()
+    df = df.set_index('A').T
+  
+    df1=pd.merge(df,df_data,indicator=True,how='right')
+    print(df1)
+    df1=df1[['_merge']]
+    df1=df1.loc[df1['_merge']=='both']
+    print(df1)
+    print(df_data)
+    df_data1=pd.merge(df_data, df1, left_index=True, right_index=True)
+    print(df_data1)
+    del df_data1['_merge']
+    index=df_data1.index.tolist()
+    df_data.drop(index, axis=0, inplace=True)
+    df_data = df_data.reset_index()
+    del df_data['index']
+    print(df_data)
